@@ -2,10 +2,24 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
+/**
+ * Class User
+ * @package App
+ *
+ * @property int $id
+ * @property int $currency_id
+ * @property string $country
+ * @property string $city
+ * @property string $name
+ * @property string $email
+ * @property Currency $currency
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -27,4 +41,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class, 'currency_id');
+    }
 }
