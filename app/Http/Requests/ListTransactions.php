@@ -4,6 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class ListTransactions
+ * @package App\Http\Requests
+ *
+ * @property-read string $from_date
+ * @property-read string $to_date
+ * @property-read string $user_name
+ */
 class ListTransactions extends FormRequest
 {
     /**

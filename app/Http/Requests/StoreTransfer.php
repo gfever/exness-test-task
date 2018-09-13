@@ -35,7 +35,7 @@ class StoreTransfer extends FormRequest
         return [
             'sender_id' => 'required|integer|exists:users,id',
             'recipient_id' => 'required|integer|exists:users,id',
-            'currency_code' => 'required',
+            'currency_code' => 'required|exists:currencies,code',
             'amount' => 'numeric|required'
         ];
     }

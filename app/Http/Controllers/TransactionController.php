@@ -10,14 +10,22 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    //
-
+    /**
+     * @param ListTransactions $listTransactions
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function index(ListTransactions $listTransactions)
     {
-
+        /** @var User $user */
+        $user = resolve(User::class)->where('name', '=', $listTransactions->user_name)->first();
+        return $user->transactions;
     }
 
 
+    /**
+     * @param StoreTransaction $storeTransaction
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function store(StoreTransaction $storeTransaction)
     {
         /** @var Transaction $transaction */

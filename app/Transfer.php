@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read  \App\User $recipient
  * @property int $currency_id
  * @property-read  \App\Currency currency
+ * @property float $amount
  */
 class Transfer extends Model
 {

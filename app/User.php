@@ -19,6 +19,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $name
  * @property string $email
  * @property Currency $currency
+ * @property Collection $transactions
  */
 class User extends Authenticatable
 {
@@ -48,5 +49,13 @@ class User extends Authenticatable
     public function currency()
     {
         return $this->belongsTo(Currency::class, 'currency_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'user_id');
     }
 }

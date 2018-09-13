@@ -3,7 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\TransferCreated;
+use App\Facades\TransferFacade;
 use App\Transaction;
+use App\Transfer;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -20,23 +22,14 @@ class ProcessTransfer
     }
 
     /**
-     * Handle the event.
-     *
-     * @param  TransferCreated  $event
-     * @return void
+     * @param TransferCreated $event
+     * @throws \Exception
      */
     public function handle(TransferCreated $event)
     {
-        /** @var Transaction $transaction */
-        $transaction = resolve(Transaction::class);
-        $transaction->user_id = $event->transfer->sender_id;
-        $transaction->operation = Transaction::OPERATION_DEDUCT;
-        $transaction->save();
-
-        /** @var Transaction $transaction */
-        $transaction = resolve(Transaction::class);
-        $transaction->user_id = $event->transfer->recipient_id;
-        $transaction->operation = Transaction::OPERATION_ADD;
-        $transaction->save();
+        /** @var TransferFacade $transferFacade */
+        $transferFacade = resolve(TransferFacade::class);
+        $transferFacade->setTransfer($event->transfer);
+        $transferFacade->process();
     }
 }

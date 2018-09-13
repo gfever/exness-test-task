@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Currency;
 use App\Events\TransferCreated;
+use App\Facades\TransferFacade;
 use App\Http\Requests\StoreTransfer;
 use App\Transaction;
 use App\Transfer;
@@ -37,6 +38,16 @@ class TransferController extends Controller
         $transfer->currency_id = $transferCurrency->id;
         $transfer->save();
 
-        event(new TransferCreated($transfer));
+        /** @var TransferFacade $transferFacade */
+        $transferFacade = resolve(TransferFacade::class);
+        $transferFacade->setTransfer($transfer);
+
+        try {
+            $transferFacade->process();
+        } catch (\Exception $e) {
+            return response($e->getMessage(), 500);
+        }
+
+        return response('Transfer created', 200);
     }
 }
