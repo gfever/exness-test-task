@@ -1,6 +1,7 @@
 FROM php:7.2-fpm-stretch
 
 RUN apt-get update && apt-get install -y gnupg2 \
+    memcached \
     git \
     libmcrypt-dev  \
     sudo  \
@@ -12,6 +13,7 @@ RUN apt-get update && apt-get install -y gnupg2 \
     && docker-php-ext-enable memcached \
     && docker-php-ext-install opcache mbstring pdo_mysql zip \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    && service memcached start
 
 COPY ./ /var/www
 WORKDIR /var/www

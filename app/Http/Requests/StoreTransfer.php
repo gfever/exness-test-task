@@ -22,7 +22,7 @@ class StoreTransfer extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -34,9 +34,9 @@ class StoreTransfer extends FormRequest
     {
         return [
             'sender_id' => 'required|integer|exists:users,id',
-            'recipient_id' => 'required|integer|exists:users,id',
+            'recipient_id' => 'required|integer|different:sender_id|exists:users,id',
             'currency_code' => 'required|exists:currencies,code',
-            'amount' => 'numeric|required'
+            'amount' => 'required|numeric'
         ];
     }
 }

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('country');
             $table->string('city');
             $table->integer('currency_id')->unsigned();
+            $table->float('balance')->default(0);
 
             $table->rememberToken();
             $table->timestamps();

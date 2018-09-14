@@ -5,16 +5,28 @@
 
 namespace App\Http\Controllers;
 
-
-use Fadion\Fixerio\Exchange;
+use App\Models\Rate;
 
 class RateController extends Controller
 {
 
-    public function update()
+    public function store()
     {
-        $rates = (new Exchange())->key(config('currencies.fixerio_acces_key'))->get();
-        dd($rates);
+        /** @var Rate $rate */
+        $rate = resolve(Rate::class);
+        $rate->setFreshRates();
+        $rate->setTodayTimestamp();
+        try {
+            $rate->save();
+            $rate->getTodayRates();
+        } catch (\Exception $exception) {
+            if ($exception->getCode() == 23000) {
+                return response('Rates already loaded');
+            }
+            return response($exception->getMessage(), 400);
+        }
+
+        return response('Rates loaded');
     }
     
 }

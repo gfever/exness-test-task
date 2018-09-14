@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Currency;
-use App\Events\TransferCreated;
+use App\Models\Currency;
 use App\Facades\TransferFacade;
 use App\Http\Requests\StoreTransfer;
-use App\Transaction;
-use App\Transfer;
-use App\User;
+use App\Models\Transfer;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class TransferController extends Controller
 {
@@ -45,7 +44,7 @@ class TransferController extends Controller
         try {
             $transferFacade->process();
         } catch (\Exception $e) {
-            return response($e->getMessage(), 500);
+            return response($e->getMessage(), $e->getCode());
         }
 
         return response('Transfer created', 200);

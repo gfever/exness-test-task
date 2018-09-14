@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Events\TransferCreated;
-use App\Listeners\ProcessTransfer;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -15,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        TransferCreated::class => [
-            ProcessTransfer::class
+        'App\Events\TransactionCreated' => [
+            'App\Listeners\ProcessTransaction'
         ]
     ];
 

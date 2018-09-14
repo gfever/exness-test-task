@@ -6,13 +6,15 @@
 namespace App\Converter;
 
 
-use App\Rate;
+use App\Models\Rate;
 use Illuminate\Database\Eloquent\Collection;
 
 class Converter
 {
-    private $rates;
+    public $rates;
     private $timestamp;
+
+
 
     /**
      * Converter constructor.
@@ -42,14 +44,17 @@ class Converter
         if ($this->rates === null) {
             /** @var Rate $rate */
             $rate = resolve(Rate::class);
+            $rates = $rate->getTodayRates();
+            $rates = $rates['rates'];
             /** @var Collection $result */
-            $result = $rate->where('created_at', '=', $this->timestamp)->pluck("rates.rates.$currencyCodeIn as $currencyCodeIn",
-                "rates.rates.$currencyCodeOut as $currencyCodeOut");
-            if ($result->count() === 0) {
-                \Log::error("No exchange rates on this date {$this->timestamp}");
-                throw new \Exception("No exchange rates on this date {$this->timestamp}");
+            if (empty($rates) || empty($rates[$currencyCodeOut]) || empty($rates[$currencyCodeOut])) {
+                \Log::error("No exchange rates on this date {$this->timestamp}, currencies {$rates[$currencyCodeOut]}, {$rates[$currencyCodeOut]}");
+                throw new \Exception("No exchange rates on this date {$this->timestamp}, currencies {$rates[$currencyCodeOut]}, {$rates[$currencyCodeOut]}");
             }
-            $this->rates = $result->first();
+
+            $this->rates[$currencyCodeOut] = $rates[$currencyCodeOut];
+            $this->rates[$currencyCodeIn] = $rates[$currencyCodeIn];
+            $this->rates[config('currencies.base_currency')] = 1.0;
         }
 
         return $this->rates;
@@ -57,24 +62,24 @@ class Converter
 
     /**
      * @param string $currencyCode
-     * @param $amount
+     * @param float $baseAmount
      * @return float|int
      * @throws \Exception
      */
-    public function convertFromBase(string $currencyCode, $amount)
+    public function convertFromBase(string $currencyCode, float $baseAmount)
     {
-        return $this->rates[$currencyCode]*$amount;
+        return number_format($this->rates[$currencyCode]*$baseAmount,2, '.', '');
     }
 
     /**
      * @param string $currencyCode
-     * @param $amount
+     * @param float $amount
      * @return float|int
      * @throws \Exception
      */
     public function convertToBase(string $currencyCode, float $amount)
     {
-        return $this->rates[$currencyCode]/$amount;
+        return number_format($amount/$this->rates[$currencyCode],2, '.', '');
     }
 
     /**

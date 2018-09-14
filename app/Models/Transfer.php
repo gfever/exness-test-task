@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,15 +9,24 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $sender_id
- * @property-read  \App\User $sender
+ * @property-read  \App\Models\User $sender
  * @property int $recipient_id
- * @property-read  \App\User $recipient
+ * @property-read  \App\Models\User $recipient
  * @property int $currency_id
- * @property-read  \App\Currency currency
+ * @property-read  \App\Models\Currency currency
  * @property float $amount
  */
 class Transfer extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'sender_id', 'recipient_id', 'amount', 'currency_id'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

@@ -7,8 +7,8 @@ namespace App\Facades;
 
 
 use App\Converter\Converter;
-use App\Transaction;
-use App\Transfer;
+use App\Models\Transaction;
+use App\Models\Transfer;
 
 /**
  * Class TransferFacade
@@ -18,6 +18,7 @@ use App\Transfer;
  */
 class TransferFacade
 {
+    /** @var Transfer */
     private $transfer;
     /** @var Converter  */
     private $converter;
@@ -51,19 +52,19 @@ class TransferFacade
     }
 
     /**
-     * @return float|int
+     * @return float
      * @throws \Exception
      */
-    public function getSenderAmount()
+    public function getSenderAmount(): float
     {
         return $this->converter->convertFromTo($this->transfer->currency->code, $this->transfer->sender->currency->code, $this->transfer->amount);
     }
 
     /**
-     * @return float|int
+     * @return float
      * @throws \Exception
      */
-    public function getRecipientAmount()
+    public function getRecipientAmount(): float
     {
         return $this->converter->convertFromTo($this->transfer->currency->code, $this->transfer->recipient->currency->code, $this->transfer->amount);
     }
@@ -73,7 +74,7 @@ class TransferFacade
      * @param string $operation
      * @throws \Exception
      */
-    private function makeTransaction(string $operation)
+    private function makeTransaction(string $operation): void
     {
         /** @var Transaction $transaction */
         $transaction = resolve(Transaction::class);
@@ -86,6 +87,6 @@ class TransferFacade
             $transaction->amount = $this->getRecipientAmount();
         }
 
-        $transaction->save();
+        $transaction->process();
     }
 }

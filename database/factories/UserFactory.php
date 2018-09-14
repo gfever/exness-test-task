@@ -13,13 +13,18 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Models\User::class, function (Faker $faker) {
+
+    $codes = ['EUR', 'USD', 'RUB', 'GBP', 'CZK'];
+    shuffle($codes);
+
     return [
-        'name' => $faker->name,
+        'name' => uniqid('user', true),
         'country' => $faker->country,
         'city' => $faker->city,
-        'currency_id' => 1,
-        'email' => $faker->unique()->safeEmail,
+        'balance' => $faker->randomFloat(null, 0, 1000),
+        'currency_id' => \App\Models\Currency::where('code', '=', head($codes))->first()->id,
+        'email' => uniqid('e', true) . $faker->unique()->safeEmail,
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'remember_token' => str_random(10),
     ];

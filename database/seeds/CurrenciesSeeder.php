@@ -117,6 +117,6 @@ class CurrenciesSeeder extends Seeder
             ['code' => 'ZAR', 'name' => 'Rand', 'symbol' => 'R'],
         ];
         
-        \App\Currency::insert($currencies);
+        \App\Models\Currency::insert($currencies);
     }
 }

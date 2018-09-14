@@ -1,12 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class User
@@ -18,20 +15,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $city
  * @property string $name
  * @property string $email
+ * @property float $balance
  * @property Currency $currency
  * @property Collection $transactions
  */
-class User extends Authenticatable
+class User extends Model
 {
-    use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'city', 'country', 'currency_id'
     ];
 
     /**
@@ -57,5 +53,12 @@ class User extends Authenticatable
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'user_id');
+    }
+
+
+
+    public function getCurrentBalance()
+    {
+        $results = \DB::select(\DB::raw("SELECT amount FROM transactions WHERE user_id={$this->id}"));
     }
 }
