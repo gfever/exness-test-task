@@ -6,18 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Laravel</title>
-    <script type='text/javascript' src='https://s3.amazonaws.com/dynatable-docs-assets/js/jquery-1.9.1.min.js'></script>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" media="all" href="https://s3.amazonaws.com/dynatable-docs-assets/css/jquery.dynatable.css" />
+    <link rel="stylesheet" media="all"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css"/>
 
-
-    <script type='text/javascript' src='https://s3.amazonaws.com/dynatable-docs-assets/js/jquery.dynatable.js'></script>
-
-
-    <link rel="stylesheet" media="all" href="https://s3.amazonaws.com/dynatable-docs-assets/css/reset.css" />
-    <link rel="stylesheet" media="all" href="https://s3.amazonaws.com/dynatable-docs-assets/css/bootstrap-2.3.2.min.css" />
     <!-- Styles -->
     <style>
         html, body {
@@ -73,73 +67,58 @@
     </style>
 </head>
 <body>
-<script>
-    var getUrlParameter = function getUrlParameter(sParam) {
-        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
-
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : sParameterName[1];
-            }
-        }
-    };
-
-    $(document).ready(function () {
-
-        $('#my-ajax-table').dynatable({
-            dataset: {
-                ajax: true,
-                ajaxUrl: '/transaction?user_name=' + getUrlParameter('user_name') + '&from_date=' + getUrlParameter('from_date') + '&to_date=' + getUrlParameter('to_date'),
-                ajaxOnLoad: true,
-                records: []
-            }
-        });
-    })
-
-
-</script>
-<div class="flex-center position-ref full-height">
-    <div class="content">
-        <div class="title m-b-md">
-            Report
+<div class="container">
+    <div class="title m-b-md">
+        Report
+    </div>
+    <form action="" method="GET" style="margin-bottom: 20px;">
+        <div class="form-group">
+            <label for="user_name">User name</label>
+            <input type="text" class="form-control" id="user_name" name="user_name" required value="Brennon McDermott"/>
         </div>
 
-        <form action="" method="GET">
-            <div class="form-group">
-                <label for="user_name">User name</label>
-                <input type="text" class="form-control" id="user_name" name="user_name" required value="Brennon McDermott"/>
-            </div>
+        <div class="form-group">
+            <label for="from_date">From date</label>
+            <input type="text" class="form-control" id="from_date" name="from_date"/>
+        </div>
 
-            <div class="form-group">
-                <label for="from_date">From date</label>
-                <input type="text" class="form-control" id="from_date" name="from_date"/>
-            </div>
+        <div class="form-group">
+            <label for="to_date">To date</label>
+            <input type="text" class="form-control" id="to_date" name="to_date"/>
+        </div>
 
-            <div class="form-group">
-                <label for="to_date">To date</label>
-                <input type="text" class="form-control" id="to_date" name="to_date"/>
-            </div>
+        <input type="submit" name="report" class="btn btn-default">
 
-            <input type="submit" name="report" class="btn btn-default">
-
-        </form>
-
-        <table id="my-ajax-table" class="table">
-            <thead>
-            <th>Some Attribute</th>
-            <th>Some Other Attribute</th>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    </form>
 
 
-    </div>
+    <p class="h5">Operations total {{$sumInUserCurrency}}</p>
+    <p class="h5">Operations total in USD {{$sunInUsd}}</p>
+    <a href="{{$_SERVER['REQUEST_URI']}}&download=1" class="btn-success btn" style="margin-bottom: 10px">Download
+        report</a>
+    <table id="report" class="table-dark table">
+        <thead>
+        <th scope="col">id</th>
+        <th scope="col">amount</th>
+        <th scope="col">operation</th>
+        <th scope="col">created_at</th>
+        </thead>
+        <tbody>
+        @foreach ($transactions as $transaction)
+
+            <tr>
+                <th scope="row">{{$transaction->id}}</th>
+                <td>{{$transaction->amount}}</td>
+                <td>{{$transaction->operation}}</td>
+                <td>{{$transaction->created_at}}</td>
+            </tr>
+
+        @endforeach
+        </tbody>
+    </table>
+
+
 </div>
+
 </body>
 </html>

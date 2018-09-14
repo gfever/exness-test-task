@@ -23,10 +23,10 @@ class RateController extends Controller
             if ($exception->getCode() == 23000) {
                 return response('Rates already loaded');
             }
-            return response($exception->getMessage(), 400);
+            return response($exception->getMessage(), 500);
         }
 
         return response('Rates loaded');
     }
-    
+
 }

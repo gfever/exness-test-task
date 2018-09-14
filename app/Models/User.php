@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $city
  * @property string $name
  * @property string $email
+ * @property string $password
  * @property float $balance
  * @property Currency $currency
  * @property Collection $transactions
@@ -54,7 +55,6 @@ class User extends Model
     {
         return $this->hasMany(Transaction::class, 'user_id');
     }
-
 
 
     public function getCurrentBalance()

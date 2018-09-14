@@ -15,14 +15,27 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
     public $timestamps = false;
-    public function getFreshRates()
-    {
-        return \file_get_contents('https://frankfurter.app/latest?base=' . config('currencies.base_currency'));
-    }
 
     public function setFreshRates(): void
     {
         $this->rates = $this->getFreshRates();
+    }
+
+    /**
+     * @param int $attempts
+     * @return bool|string
+     * @throws \Exception
+     */
+    public function getFreshRates(int $attempts = 10)
+    {
+        for ($i = 0; $i < $attempts; $i++) {
+            try {
+                return \file_get_contents('https://frankfurter.app/latest?base=' . config('currencies.base_currency'));
+            } catch (\Exception $exception) {
+            }
+        }
+
+        throw new \Exception('Can\'t load rates!');
     }
 
     public function setTodayTimestamp(): void
@@ -38,19 +51,21 @@ class Rate extends Model
         return (new \DateTime())->format('Y-m-d');
     }
 
-    public function getTodayRates()
+    public function getTodayRates(): array
     {
         $rates = \Cache::get('today_rates3');
         if (empty($rates)) {
             $rates = json_decode($this->where('created_at', '=', $this->getTodayTimestamp())->firstOrFail()->rates, true);
             $rates['rates'][config('currencies.base_currency')] = 1.0;
 
-            array_walk($rates['rates'], function (&$v, $k) {
+            array_walk($rates['rates'], function (&$v) {
                 $v = (float)$v;
             });
-            \Cache::put('today_rates3', $rates, 24*60);
+
+            \Cache::put('today_rates3', $rates, 24 * 60);
         }
 
         return $rates;
     }
+
 }

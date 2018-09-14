@@ -20,7 +20,7 @@ Route::post('rate', 'RateController@store');
 Route::get('transaction', 'TransactionController@index');
 
 /** @see \App\Http\Controllers\WalletController::add */
-Route::put('wallet', 'WalletController@add');
+Route::put('wallet/{user}', 'WalletController@add');
 
 /** @see \App\Http\Controllers\TransferController::store() */
 Route::post('transfer', 'TransferController@store');

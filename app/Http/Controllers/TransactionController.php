@@ -9,7 +9,7 @@ class TransactionController extends Controller
 {
     /**
      * @param ListTransactions $listTransactions
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return array
      */
     public function index(ListTransactions $listTransactions)
     {
@@ -18,15 +18,15 @@ class TransactionController extends Controller
 
         $builder = $user->transactions();
 
-        if (!empty($listTransactions->from_date)){
+        if (!empty($listTransactions->from_date)) {
             $builder->where('created_at', '>=', $listTransactions->from_date);
         }
 
-        if (!empty($listTransactions->to_date)){
+        if (!empty($listTransactions->to_date)) {
             $builder->where('created_at', '<=', $listTransactions->to_date);
         }
 
-        return $builder->get();
+        return ['data' => $builder->get()];
     }
 
 }

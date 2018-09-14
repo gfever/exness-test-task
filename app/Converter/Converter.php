@@ -15,7 +15,6 @@ class Converter
     private $timestamp;
 
 
-
     /**
      * Converter constructor.
      * @throws \Exception
@@ -36,10 +35,23 @@ class Converter
     /**
      * @param string $currencyCodeIn
      * @param string $currencyCodeOut
+     * @param $amount
+     * @return float|int
+     * @throws \Exception
+     */
+    public function convertFromTo(string $currencyCodeIn, string $currencyCodeOut, $amount)
+    {
+        $this->rates = $this->getRatesToDate($currencyCodeIn, $currencyCodeOut);
+        return $this->convertFromBase($currencyCodeOut, $this->convertToBase($currencyCodeIn, $amount));
+    }
+
+    /**
+     * @param string $currencyCodeIn
+     * @param string $currencyCodeOut
      * @return array
      * @throws \Exception
      */
-    private function getRatesToDate(string $currencyCodeIn, string $currencyCodeOut): array
+    public function getRatesToDate(string $currencyCodeIn, string $currencyCodeOut): array
     {
         if ($this->rates === null) {
             /** @var Rate $rate */
@@ -68,7 +80,7 @@ class Converter
      */
     public function convertFromBase(string $currencyCode, float $baseAmount)
     {
-        return number_format($this->rates[$currencyCode]*$baseAmount,2, '.', '');
+        return number_format($this->rates[$currencyCode] * $baseAmount, 2, '.', '');
     }
 
     /**
@@ -79,19 +91,6 @@ class Converter
      */
     public function convertToBase(string $currencyCode, float $amount)
     {
-        return number_format($amount/$this->rates[$currencyCode],2, '.', '');
-    }
-
-    /**
-     * @param string $currencyCodeIn
-     * @param string $currencyCodeOut
-     * @param $amount
-     * @return float|int
-     * @throws \Exception
-     */
-    public function convertFromTo(string $currencyCodeIn, string $currencyCodeOut, $amount)
-    {
-        $this->rates = $this->getRatesToDate($currencyCodeIn, $currencyCodeOut);
-        return $this->convertFromBase($currencyCodeOut, $this->convertToBase($currencyCodeIn, $amount));
+        return number_format($amount / $this->rates[$currencyCode], 2, '.', '');
     }
 }

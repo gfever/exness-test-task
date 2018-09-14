@@ -8,10 +8,11 @@ use Illuminate\Foundation\Http\FormRequest;
  * Class StoreTransfer
  * @package App\Http\Requests
  *
- * @property-read int $sender_id
- * @property-read int $recipient_id
- * @property-read string $currency_code
- * @property-read float $amount
+ * @property int $sender_id
+ * @property int $recipient_id
+ * @property string $currency_code
+ * @property string $sender_password
+ * @property float $amount
  */
 class StoreTransfer extends FormRequest
 {
@@ -33,6 +34,7 @@ class StoreTransfer extends FormRequest
     public function rules()
     {
         return [
+            'sender_password' => 'required|string',
             'sender_id' => 'required|integer|exists:users,id',
             'recipient_id' => 'required|integer|different:sender_id|exists:users,id',
             'currency_code' => 'required|exists:currencies,code',

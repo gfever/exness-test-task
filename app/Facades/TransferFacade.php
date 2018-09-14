@@ -20,7 +20,7 @@ class TransferFacade
 {
     /** @var Transfer */
     private $transfer;
-    /** @var Converter  */
+    /** @var Converter */
     private $converter;
 
     /**
@@ -45,28 +45,11 @@ class TransferFacade
      */
     public function process(): void
     {
-        $this->makeTransaction(Transaction::OPERATION_DEDUCT);
-        $this->makeTransaction(Transaction::OPERATION_ADD);
+        \DB::transaction(function () {
+            $this->makeTransaction(Transaction::OPERATION_DEDUCT);
+            $this->makeTransaction(Transaction::OPERATION_ADD);
+        });
     }
-
-    /**
-     * @return float
-     * @throws \Exception
-     */
-    public function getSenderAmount(): float
-    {
-        return $this->converter->convertFromTo($this->transfer->currency->code, $this->transfer->sender->currency->code, $this->transfer->amount);
-    }
-
-    /**
-     * @return float
-     * @throws \Exception
-     */
-    public function getRecipientAmount(): float
-    {
-        return $this->converter->convertFromTo($this->transfer->currency->code, $this->transfer->recipient->currency->code, $this->transfer->amount);
-    }
-
 
     /**
      * @param string $operation
@@ -86,5 +69,23 @@ class TransferFacade
         }
 
         $transaction->process();
+    }
+
+    /**
+     * @return float
+     * @throws \Exception
+     */
+    public function getSenderAmount(): float
+    {
+        return $this->converter->convertFromTo($this->transfer->currency->code, $this->transfer->sender->currency->code, $this->transfer->amount);
+    }
+
+    /**
+     * @return float
+     * @throws \Exception
+     */
+    public function getRecipientAmount(): float
+    {
+        return $this->converter->convertFromTo($this->transfer->currency->code, $this->transfer->recipient->currency->code, $this->transfer->amount);
     }
 }

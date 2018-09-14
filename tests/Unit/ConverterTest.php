@@ -38,7 +38,7 @@ class ConverterTest extends TestCase
 
         $result = $converter->convertFromTo('EUR', 'GBP', 10);
 
-        $this->assertEquals(8.90, $result);
+        $this->assertEquals(15.00, $result);
     }
 
 }

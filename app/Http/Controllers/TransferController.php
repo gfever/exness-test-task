@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Currency;
 use App\Facades\TransferFacade;
 use App\Http\Requests\StoreTransfer;
+use App\Models\Currency;
 use App\Models\Transfer;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class TransferController extends Controller
 {
@@ -21,9 +20,13 @@ class TransferController extends Controller
         $user = resolve(User::class);
         /** @var User $sender */
         $sender = $user->find($storeTransfer->sender_id);
+        if ($storeTransfer->sender_password !== $sender->password) {
+            return response('Wrong password', 401);
+        }
         /** @var User $recipient */
         $recipient = $user->find($storeTransfer->recipient_id);
 
+        /** @var Currency $transferCurrency */
         $transferCurrency = resolve(Currency::class)->whereCode($storeTransfer->currency_code)->firstOrFail();
 
         $availableCurrencies = array_unique([$sender->currency->code, $recipient->currency->code]);

@@ -4,6 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class WalletAdd
+ * @package App\Http\Requests
+ *
+ * @property string $password
+ * @property integer $user_id
+ * @property float $amount
+ */
 class WalletAdd extends FormRequest
 {
     /**
@@ -24,7 +32,7 @@ class WalletAdd extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'integer|required|exists:users,id',
+            'password' => 'required|string',
             'amount' => 'numeric|required'
         ];
     }
