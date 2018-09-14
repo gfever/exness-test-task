@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y gnupg2 \
     && pecl install memcached \
     && docker-php-ext-enable memcached \
     && docker-php-ext-install opcache mbstring pdo_mysql zip \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && service memcached start
 
 COPY ./ /var/www

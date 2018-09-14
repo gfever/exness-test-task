@@ -24,8 +24,7 @@ class TransferFacade
     private $converter;
 
     /**
-     * TransferFacade constructor.
-     * @param Transfer $transfer
+     * TransferFacade constructor
      * @throws \Exception
      */
     public function __construct()
@@ -46,9 +45,8 @@ class TransferFacade
      */
     public function process(): void
     {
-        $this->makeTransaction(Transaction::OPERATION_ADD);
         $this->makeTransaction(Transaction::OPERATION_DEDUCT);
-        
+        $this->makeTransaction(Transaction::OPERATION_ADD);
     }
 
     /**

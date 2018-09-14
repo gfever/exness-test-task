@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/', 'ReportController@userTransactions');
+
 /** @see \App\Http\Controllers\RateController::store() */
 Route::post('rate', 'RateController@store');
 
@@ -25,3 +27,5 @@ Route::post('transfer', 'TransferController@store');
 
 /** @see \App\Http\Controllers\UserController::store() */
 Route::post('user', 'UserController@store');
+
+
