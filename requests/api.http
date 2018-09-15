@@ -5,15 +5,6 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-
-POST http://69.30.252.106:8089/api/transfer?sender_password=secret&amount=12&sender_id=3&recipient_id=1&currency_code=RUB
-Accept: */*
-Cache-Control: no-cache
-
-<> 2018-09-15T090927.200.html
-
-###
-
 POST http://69.30.252.106:8089/api/rate
 
 <> 2018-09-15T091211.200.html
@@ -21,10 +12,18 @@ POST http://69.30.252.106:8089/api/rate
 
 ###
 
+POST http://69.30.252.106:8089/api/user?name=gdiq&email=qeqwe@qewqwe.com&password=secret&city=samara&country=russia&currency_code=EUR
+
+###
+
 PUT http://69.30.252.106:8089/api/wallet/1?amount=7&password=secret
 
 ###
 
-POST http://69.30.252.106:8089/api/user?name=gdiq&email=qeqwe@qewqwe.com&password=secret&city=samara&country=russia&currency_code=EUR
+POST http://69.30.252.106:8089/api/transfer?sender_password=secret&amount=12&sender_id=3&recipient_id=1&currency_code=RUB
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-09-15T090927.200.html
 
 ###
