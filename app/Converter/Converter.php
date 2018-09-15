@@ -56,17 +56,13 @@ class Converter
         if ($this->rates === null) {
             /** @var Rate $rate */
             $rate = resolve(Rate::class);
-            $rates = $rate->getTodayRates();
-            $rates = $rates['rates'];
+            $this->rates = $rate->getTodayRates()['rates'];
             /** @var Collection $result */
-            if (empty($rates) || empty($rates[$currencyCodeOut]) || empty($rates[$currencyCodeOut])) {
-                \Log::error("No exchange rates on this date {$this->timestamp}, currencies {$rates[$currencyCodeOut]}, {$rates[$currencyCodeOut]}");
-                throw new \Exception("No exchange rates on this date {$this->timestamp}, currencies {$rates[$currencyCodeOut]}, {$rates[$currencyCodeOut]}");
+            if (empty($this->rates) || empty($this->rates[$currencyCodeOut]) || empty($this->rates[$currencyCodeIn])) {
+                $rates = json_encode($this->rates);
+                \Log::error("No exchange rates on this date {$this->timestamp}, currencies {$currencyCodeOut}, {$currencyCodeIn}");
+                throw new \Exception("No exchange rates on this date {$this->timestamp}, currencies {$currencyCodeOut}, {$currencyCodeIn}. {$rates}");
             }
-
-            $this->rates[$currencyCodeOut] = $rates[$currencyCodeOut];
-            $this->rates[$currencyCodeIn] = $rates[$currencyCodeIn];
-            $this->rates[config('currencies.base_currency')] = 1.0;
         }
 
         return $this->rates;

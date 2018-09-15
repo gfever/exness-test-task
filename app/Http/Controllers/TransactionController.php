@@ -19,11 +19,11 @@ class TransactionController extends Controller
         $builder = $user->transactions();
 
         if (!empty($listTransactions->from_date)) {
-            $builder->where('created_at', '>=', $listTransactions->from_date);
+            $builder->where('created_at', '>=', $listTransactions->from_date . ' 00:00:00');
         }
 
         if (!empty($listTransactions->to_date)) {
-            $builder->where('created_at', '<=', $listTransactions->to_date);
+            $builder->where('created_at', '<=', $listTransactions->to_date . ' 23:59:59');
         }
 
         return ['data' => $builder->get()];

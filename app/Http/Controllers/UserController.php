@@ -22,7 +22,7 @@ class UserController extends Controller
         $user->password = $storeUser->password;
         $user->save();
 
-        return response('User registered');
+        return response($user);
     }
 
 }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 /**
  * Class StoreUser
  * @package App\Http\Requests\
@@ -15,7 +13,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property-read string $city
  * @property-read string $currency_code
  */
-class StoreUser extends FormRequest
+class StoreUser extends EteFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,8 +33,8 @@ class StoreUser extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'email' => 'required|email',
+            'name' => 'required|string|unique:users,name',
+            'email' => 'required|email|unique:users,email',
             'country' => 'required|string',
             'password' => 'required|string',
             'city' => 'required|string',

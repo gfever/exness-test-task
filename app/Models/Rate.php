@@ -53,7 +53,7 @@ class Rate extends Model
 
     public function getTodayRates(): array
     {
-        $rates = \Cache::get('today_rates3');
+        $rates = \Cache::get($this->getTodayTimestamp());
         if (empty($rates)) {
             $rates = json_decode($this->where('created_at', '=', $this->getTodayTimestamp())->firstOrFail()->rates, true);
             $rates['rates'][config('currencies.base_currency')] = 1.0;
@@ -62,7 +62,7 @@ class Rate extends Model
                 $v = (float)$v;
             });
 
-            \Cache::put('today_rates3', $rates, 24 * 60);
+            \Cache::put($this->getTodayTimestamp(), $rates, 24 * 60);
         }
 
         return $rates;

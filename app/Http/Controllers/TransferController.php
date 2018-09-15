@@ -47,7 +47,7 @@ class TransferController extends Controller
         try {
             $transferFacade->process();
         } catch (\Exception $e) {
-            return response($e->getMessage(), $e->getCode());
+            return response($e->getMessage());
         }
 
         return response('Transfer created', 200);

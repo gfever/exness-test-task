@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 /**
  * Class WalletAdd
  * @package App\Http\Requests
@@ -12,7 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property integer $user_id
  * @property float $amount
  */
-class WalletAdd extends FormRequest
+class WalletAdd extends EteFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

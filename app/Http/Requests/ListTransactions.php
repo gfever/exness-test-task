@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 /**
  * Class ListTransactions
  * @package App\Http\Requests
@@ -12,7 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string $to_date
  * @property string $user_name
  */
-class ListTransactions extends FormRequest
+class ListTransactions extends EteFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
