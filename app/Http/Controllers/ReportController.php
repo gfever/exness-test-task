@@ -34,27 +34,29 @@ class ReportController extends Controller
 
             $transactions = $builder->get();
 
-            if (!empty($listTransactions->download)) {
-                $pathToFile = "/tmp/report_{$user->id}.csv";
-                $fp = fopen($pathToFile, 'w');
+            if ($transactions->count() > 0) {
+                if (!empty($listTransactions->download)) {
+                    $pathToFile = "/tmp/report_{$user->id}.csv";
+                    $fp = fopen($pathToFile, 'w');
 
-                $transactions = $transactions->toArray();
-                foreach ($transactions as $transaction) {
-                    fputcsv($fp, $transaction);
+                    $transactions = $transactions->toArray();
+                    foreach ($transactions as $transaction) {
+                        fputcsv($fp, $transaction);
+                    }
+
+                    fclose($fp);
+                    return response()->download($pathToFile)->deleteFileAfterSend(true);
                 }
 
-                fclose($fp);
-                return response()->download($pathToFile)->deleteFileAfterSend(true);
-            }
+                $sumInUserCurrency = $transactions->where('operation', '=', Transaction::OPERATION_ADD)->sum('amount') - $transactions->where('operation', '=', Transaction::OPERATION_DEDUCT)->sum('amount');
 
-            $sumInUserCurrency = $transactions->where('operation', '=', Transaction::OPERATION_ADD)->sum('amount') - $transactions->where('operation', '=', Transaction::OPERATION_DEDUCT)->sum('amount');
-
-            /** @var Converter $converter */
-            $converter = resolve(Converter::class);
-            try {
-                $sunInUsd = $converter->convertFromTo($user->currency->code, 'USD', $sumInUserCurrency);
-            } catch (\Exception $exception) {
-                return response($exception->getMessage(), 400);
+                /** @var Converter $converter */
+                $converter = resolve(Converter::class);
+                try {
+                    $sunInUsd = $converter->convertFromTo($user->currency->code, 'USD', $sumInUserCurrency);
+                } catch (\Exception $exception) {
+                    return response($exception->getMessage(), 400);
+                }
             }
         }
 

@@ -91,11 +91,13 @@
 
     </form>
 
-
+    @if(!empty($transactions))
     <p class="h5">Operations total {{$sumInUserCurrency}}</p>
     <p class="h5">Operations total in USD {{$sunInUsd}}</p>
+
     <a href="{{$_SERVER['REQUEST_URI']}}&download=1" class="btn-success btn" style="margin-bottom: 10px">Download
         report</a>
+    @endif
     <table id="report" class="table-dark table">
         <thead>
         <th scope="col">id</th>
