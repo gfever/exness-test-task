@@ -33,7 +33,7 @@ class ListTransactions extends EteFormRequest
             'download' => 'int',
             'from_date' => 'nullable|date_format:Y-m-d',
             'to_date' => 'nullable|date_format:Y-m-d',
-            'user_name' => 'string|required|exists:users,name',
+            'user_name' => 'string',
         ];
     }
 }

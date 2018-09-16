@@ -55,7 +55,13 @@ class Rate extends Model
     {
         $rates = \Cache::get($this->getTodayTimestamp());
         if (empty($rates)) {
-            $rates = json_decode($this->where('created_at', '=', $this->getTodayTimestamp())->firstOrFail()->rates, true);
+            $rates = $this->where('created_at', '=', $this->getTodayTimestamp())->first();
+
+            if (!$rates) {
+                throw new \Exception('Today rates not loaded!!!');
+            }
+
+            $rates = json_decode($rates->rates, true);
             $rates['rates'][config('currencies.base_currency')] = 1.0;
 
             array_walk($rates['rates'], function (&$v) {

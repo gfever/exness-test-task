@@ -87,7 +87,7 @@
             <input type="text" class="form-control" id="to_date" name="to_date"/>
         </div>
 
-        <input type="submit" name="report" class="btn btn-default">
+        <input type="submit" class="btn btn-default">
 
     </form>
 
