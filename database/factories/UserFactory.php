@@ -25,7 +25,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'balance' => $faker->randomFloat(null, 0, 1000),
         'currency_id' => \App\Models\Currency::where('code', '=', head($codes))->first()->id,
         'email' => uniqid('e', true) . $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'password' => 'secret', // secret
         'remember_token' => str_random(10),
     ];
 });
