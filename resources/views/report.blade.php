@@ -79,12 +79,12 @@
 
         <div class="form-group">
             <label for="from_date">From date</label>
-            <input type="text" class="form-control" id="from_date" name="from_date"/>
+            <input type="text" class="form-control" id="from_date" name="from_date" value="2018-09-14"/>
         </div>
 
         <div class="form-group">
             <label for="to_date">To date</label>
-            <input type="text" class="form-control" id="to_date" name="to_date"/>
+            <input type="text" class="form-control" id="to_date" name="to_date" value="2019-09-14"/>
         </div>
 
         <input type="submit" class="btn btn-default">

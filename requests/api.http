@@ -12,7 +12,7 @@ POST http://69.30.252.106:8089/api/rate
 
 ###
 
-POST http://69.30.252.106:8089/api/user?name=gdiq&email=qeqwe@qewqwe.com&password=secret&city=samara&country=russia&currency_code=EUR
+POST http://69.30.252.106:8089/api/user?name=gdiq1&email=qeqwe@qewqwe123.com&password=secret&city=samara&country=russia&currency_code=EUR
 
 ###
 
