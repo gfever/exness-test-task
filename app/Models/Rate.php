@@ -32,6 +32,7 @@ class Rate extends Model
             try {
                 return \file_get_contents('https://frankfurter.app/latest?base=' . config('currencies.base_currency'));
             } catch (\Exception $exception) {
+                usleep(100);
             }
         }
 
