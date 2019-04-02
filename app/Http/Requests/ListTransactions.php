@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 /**
  * Class ListTransactions
+ *
  * @package App\Http\Requests
  *
  * @property string $from_date
@@ -30,9 +31,9 @@ class ListTransactions extends EteFormRequest
     public function rules()
     {
         return [
-            'download' => 'int',
+            'download'  => 'int',
             'from_date' => 'nullable|date_format:Y-m-d',
-            'to_date' => 'nullable|date_format:Y-m-d',
+            'to_date'   => 'nullable|date_format:Y-m-d',
             'user_name' => 'string',
         ];
     }

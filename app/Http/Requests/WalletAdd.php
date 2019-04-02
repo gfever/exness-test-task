@@ -4,11 +4,12 @@ namespace App\Http\Requests;
 
 /**
  * Class WalletAdd
+ *
  * @package App\Http\Requests
  *
- * @property string $password
+ * @property string  $password
  * @property integer $user_id
- * @property float $amount
+ * @property float   $amount
  */
 class WalletAdd extends EteFormRequest
 {
@@ -31,7 +32,7 @@ class WalletAdd extends EteFormRequest
     {
         return [
             'password' => 'required|string',
-            'amount' => 'numeric|required'
+            'amount'   => 'numeric|required'
         ];
     }
 }

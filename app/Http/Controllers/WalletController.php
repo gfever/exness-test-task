@@ -15,7 +15,8 @@ class WalletController extends Controller
 {
     /**
      * @param WalletAdd $walletAdd
-     * @param User $user
+     * @param User      $user
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */

@@ -11,11 +11,12 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
-        'App\Events\TransactionCreated' => [
-            'App\Listeners\ProcessTransaction'
-        ]
-    ];
+    protected $listen
+        = [
+            'App\Events\TransactionCreated' => [
+                'App\Listeners\ProcessTransaction'
+            ]
+        ];
 
     /**
      * Register any events for your application.

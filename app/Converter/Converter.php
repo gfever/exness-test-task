@@ -17,6 +17,7 @@ class Converter
 
     /**
      * Converter constructor.
+     *
      * @throws \Exception
      */
     public function __construct()
@@ -35,7 +36,8 @@ class Converter
     /**
      * @param string $currencyCodeIn
      * @param string $currencyCodeOut
-     * @param $amount
+     * @param        $amount
+     *
      * @return float|int
      * @throws \Exception
      */
@@ -48,6 +50,7 @@ class Converter
     /**
      * @param string $currencyCodeIn
      * @param string $currencyCodeOut
+     *
      * @return array
      * @throws \Exception
      */
@@ -70,7 +73,8 @@ class Converter
 
     /**
      * @param string $currencyCode
-     * @param float $baseAmount
+     * @param float  $baseAmount
+     *
      * @return float|int
      * @throws \Exception
      */
@@ -81,7 +85,8 @@ class Converter
 
     /**
      * @param string $currencyCode
-     * @param float $amount
+     * @param float  $amount
+     *
      * @return float|int
      * @throws \Exception
      */

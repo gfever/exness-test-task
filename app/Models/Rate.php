@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Rate
+ *
  * @package App
  *
- * @property $created_at
+ * @property       $created_at
  * @property array $rates
  */
 class Rate extends Model
@@ -23,6 +24,7 @@ class Rate extends Model
 
     /**
      * @param int $attempts
+     *
      * @return bool|string
      * @throws \Exception
      */

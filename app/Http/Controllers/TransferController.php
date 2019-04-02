@@ -12,6 +12,7 @@ class TransferController extends Controller
 {
     /**
      * @param StoreTransfer $storeTransfer
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function store(StoreTransfer $storeTransfer)

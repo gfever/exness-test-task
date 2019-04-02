@@ -11,6 +11,7 @@ class UserController extends Controller
 {
     /**
      * @param StoreUser $storeUser
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function store(StoreUser $storeUser)

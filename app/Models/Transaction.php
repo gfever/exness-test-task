@@ -7,15 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Transaction
+ *
  * @package App
  *
- * @property-read int $id
+ * @property-read int       $id
  * @property-read \DateTime $created_at
  * @property-read \DateTime $updated_at
- * @property int $user_id
- * @property string $operation
- * @property float $amount
- * @property-read User $user
+ * @property int            $user_id
+ * @property string         $operation
+ * @property float          $amount
+ * @property-read User      $user
  *
  */
 class Transaction extends Model
@@ -25,9 +26,11 @@ class Transaction extends Model
     public const OPERATIONS = [self::OPERATION_ADD, self::OPERATION_DEDUCT];
 
 
-    protected $fillable = [
-        'user_id', 'amount'
-    ];
+    protected $fillable
+        = [
+            'user_id',
+            'amount'
+        ];
 
     /**
      * @throws \Exception

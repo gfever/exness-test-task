@@ -12,6 +12,7 @@ use App\Models\Transfer;
 
 /**
  * Class TransferFacade
+ *
  * @package App\Facades
  *
  * @property-read Transfer $transfer
@@ -25,6 +26,7 @@ class TransferFacade
 
     /**
      * TransferFacade constructor
+     *
      * @throws \Exception
      */
     public function __construct()
@@ -52,14 +54,36 @@ class TransferFacade
     }
 
     /**
+     * @return float
+     * @throws \Exception
+     */
+    public function getSenderAmount(): float
+    {
+        return $this->converter->convertFromTo($this->transfer->currency->code, $this->transfer->sender->currency->code,
+            $this->transfer->amount);
+    }
+
+    /**
+     * @return float
+     * @throws \Exception
+     */
+    public function getRecipientAmount(): float
+    {
+        return $this->converter->convertFromTo($this->transfer->currency->code,
+            $this->transfer->recipient->currency->code, $this->transfer->amount);
+    }
+
+    /**
      * @param string $operation
+     *
      * @throws \Exception
      */
     private function makeTransaction(string $operation): void
     {
         /** @var Transaction $transaction */
         $transaction = resolve(Transaction::class);
-        $transaction->user_id = $operation === Transaction::OPERATION_DEDUCT ? $this->transfer->sender_id : $this->transfer->recipient_id;
+        $transaction->user_id = $operation === Transaction::OPERATION_DEDUCT ? $this->transfer->sender_id
+            : $this->transfer->recipient_id;
         $transaction->operation = $operation;
 
         if ($operation === Transaction::OPERATION_DEDUCT) {
@@ -69,23 +93,5 @@ class TransferFacade
         }
 
         $transaction->process();
-    }
-
-    /**
-     * @return float
-     * @throws \Exception
-     */
-    public function getSenderAmount(): float
-    {
-        return $this->converter->convertFromTo($this->transfer->currency->code, $this->transfer->sender->currency->code, $this->transfer->amount);
-    }
-
-    /**
-     * @return float
-     * @throws \Exception
-     */
-    public function getRecipientAmount(): float
-    {
-        return $this->converter->convertFromTo($this->transfer->currency->code, $this->transfer->recipient->currency->code, $this->transfer->amount);
     }
 }

@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Transfer
+ *
  * @package App
  *
- * @property int $sender_id
- * @property-read  \App\Models\User $sender
- * @property int $recipient_id
- * @property-read  \App\Models\User $recipient
- * @property int $currency_id
+ * @property int                        $sender_id
+ * @property-read  \App\Models\User     $sender
+ * @property int                        $recipient_id
+ * @property-read  \App\Models\User     $recipient
+ * @property int                        $currency_id
  * @property-read  \App\Models\Currency currency
- * @property float $amount
+ * @property float                      $amount
  */
 class Transfer extends Model
 {
@@ -23,9 +24,13 @@ class Transfer extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'sender_id', 'recipient_id', 'amount', 'currency_id'
-    ];
+    protected $fillable
+        = [
+            'sender_id',
+            'recipient_id',
+            'amount',
+            'currency_id'
+        ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

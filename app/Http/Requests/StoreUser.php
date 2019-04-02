@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 /**
  * Class StoreUser
+ *
  * @package App\Http\Requests\
  *
  * @property-read string $name
@@ -33,11 +34,11 @@ class StoreUser extends EteFormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:users,name',
-            'email' => 'required|email|unique:users,email',
-            'country' => 'required|string',
-            'password' => 'required|string',
-            'city' => 'required|string',
+            'name'          => 'required|string|unique:users,name',
+            'email'         => 'required|email|unique:users,email',
+            'country'       => 'required|string',
+            'password'      => 'required|string',
+            'city'          => 'required|string',
             'currency_code' => 'required'
         ];
     }

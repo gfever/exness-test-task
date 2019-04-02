@@ -9,6 +9,7 @@ class TransactionController extends Controller
 {
     /**
      * @param ListTransactions $listTransactions
+     *
      * @return array
      */
     public function index(ListTransactions $listTransactions)

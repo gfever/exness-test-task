@@ -48,7 +48,8 @@ class ReportController extends Controller
                     return response()->download($pathToFile)->deleteFileAfterSend(true);
                 }
 
-                $sumInUserCurrency = $transactions->where('operation', '=', Transaction::OPERATION_ADD)->sum('amount') - $transactions->where('operation', '=', Transaction::OPERATION_DEDUCT)->sum('amount');
+                $sumInUserCurrency = $transactions->where('operation', '=', Transaction::OPERATION_ADD)->sum('amount')
+                    - $transactions->where('operation', '=', Transaction::OPERATION_DEDUCT)->sum('amount');
 
                 /** @var Converter $converter */
                 $converter = resolve(Converter::class);
